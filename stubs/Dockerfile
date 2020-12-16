@@ -35,11 +35,9 @@ RUN install-php-extensions mysqli
 RUN install-php-extensions opcache
 RUN install-php-extensions pdo_mysql
 RUN install-php-extensions pdo_pgsql
-RUN install-php-extensions pdo_sqlsrv
 RUN install-php-extensions pgsql
 RUN install-php-extensions redis
 RUN install-php-extensions sockets
-RUN install-php-extensions sqlsrv
 RUN install-php-extensions xsl
 RUN install-php-extensions zip
 
