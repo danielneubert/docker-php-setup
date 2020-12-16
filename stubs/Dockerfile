@@ -1,34 +1,52 @@
 FROM php:%PHP%-apache
 
+
+# ------------------------------
+# Preinstall Libarys
+# ------------------------------
+ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
+RUN chmod uga+x /usr/local/bin/install-php-extensions && sync
+
+
 # ------------------------------
 # Preinstall Libarys
 # ------------------------------
 RUN apt-get update -y \
-  && apt-get install -y \
+    && apt-get install -y \
       curl \
-      zip unzip \
+      git \
       libxml2-dev \
-  && apt-get clean -y \
+      libpng-dev \
+      zlib1g-dev \
+      zip unzip \
+    && apt-get clean -y
+
 
 # ------------------------------
 # Install Extenstions
 # ------------------------------
-RUN docker-php-ext-install bcmath \
-    bz2 \
-    calendar \
-    exif \
-    gd \
-    intl \
-    memcached \
-    mysqli \
-    opcache \
-    pdo_mysql \
-    pdo_pgsql \
-    pgsql \
-    redis \
-    soap \
-    sockets \
-    zip
+RUN install-php-extensions bz2
+RUN install-php-extensions bcmath
+RUN install-php-extensions calendar
+RUN install-php-extensions intl
+RUN install-php-extensions ldap
+RUN install-php-extensions memcached
+RUN install-php-extensions mysqli
+RUN install-php-extensions opcache
+RUN install-php-extensions pdo_mysql
+RUN install-php-extensions pdo_pgsql
+RUN install-php-extensions pdo_sqlsrv
+RUN install-php-extensions pgsql
+RUN install-php-extensions redis
+RUN install-php-extensions sockets
+RUN install-php-extensions sqlsrv
+RUN install-php-extensions xsl
+RUN install-php-extensions zip
+
+RUN docker-php-ext-install exif
+RUN docker-php-ext-install gd
+RUN docker-php-ext-install soap
+
 
 # ------------------------------
 # Restart Apache
