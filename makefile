@@ -20,7 +20,7 @@ DOCKER_COMPOSE_CHECKUP = docker-compose version
 INPUT = null
 PHP_DEFAULT_VERSION = 8.0
 SED_CHECKUP = sed script
-STUB_URL = https://github.com/danielneubert/docker-php-setup/blob/main/stubs
+STUB_URL = https://raw.githubusercontent.com/danielneubert/docker-php-setup/master/stubs
 
 
 
@@ -135,10 +135,11 @@ ifndef port
 	@make error-port-argument-missing
 endif
 
+	@if [ -d ".docker" ]; then true; else mkdir .docker; fi;
 	@echo "${C_00F}→${C_NULL} Downloading Dockerfile and docker-compose stubs ... ${C_0F0}(0/2)${C_NULL}"
-	@curl ${SUB_URL}/Dockerfile --output .docker/Dockerfile.stub 2>/dev/null
+	@curl ${STUB_URL}/Dockerfile --output .docker/Dockerfile.stub 2>/dev/null
 	@echo "${REWRITE}${C_00F}→${C_NULL} Downloading Dockerfile and docker-compose stubs ... ${C_0F0}(1/2)${C_NULL}"
-	@curl ${SUB_URL}/docker-compose.yaml --output .docker/docker-compose.stub 2>/dev/null
+	@curl ${STUB_URL}/docker-compose.yaml --output .docker/docker-compose.stub 2>/dev/null
 	@echo "${REWRITE}${C_0F0}✔${C_NULL} Downloading Dockerfile and docker-compose stubs ${C_0F0}(2/2)${C_NULL}"
 
 	@echo "${C_00F}→${C_NULL} Writing PHP version and port to stubs ..."
