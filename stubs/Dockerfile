@@ -19,12 +19,17 @@ RUN apt-get update -y \
       libpng-dev \
       zlib1g-dev \
       zip unzip \
+      libfreetype6-dev \
+      libjpeg62-turbo-dev \
+      libpng-dev \
     && apt-get clean -y
 
 
 # ------------------------------
 # Install Extenstions
 # ------------------------------
+RUN docker-php-ext-configure gd --enable-gd --with-jpeg=/usr/include/
+RUN docker-php-ext-install gd
 RUN install-php-extensions bz2
 RUN install-php-extensions bcmath
 RUN install-php-extensions calendar
@@ -42,7 +47,6 @@ RUN install-php-extensions xsl
 RUN install-php-extensions zip
 
 RUN docker-php-ext-install exif
-RUN docker-php-ext-install gd
 RUN docker-php-ext-install soap
 
 
